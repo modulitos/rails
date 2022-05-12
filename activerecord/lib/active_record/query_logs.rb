@@ -92,8 +92,8 @@ module ActiveRecord
       end
 
       # Updates the formatter to be what the passed in format is.
-      def update_formatter(formatter = tags_format)
-        self.tags_formatter = QueryLogs::FormatterFactory.from_symbol(formatter)
+      def update_formatter(format = tags_format)
+        self.tags_formatter = QueryLogs::FormatterFactory.from_symbol(format)
       end
 
       ActiveSupport::ExecutionContext.after_change { ActiveRecord::QueryLogs.clear_cache }
