@@ -24,7 +24,7 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.cache_query_log_tags = false
     ActiveRecord::QueryLogs.cached_comment = nil
     ActiveRecord::QueryLogs.tags_format = :default
-    ActiveRecord::QueryLogs.formatter = nil
+    ActiveRecord::QueryLogs.update_formatter
   end
 
   def teardown
@@ -35,7 +35,7 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.cache_query_log_tags = false
     ActiveRecord::QueryLogs.cached_comment = nil
     ActiveRecord::QueryLogs.tags_format = :default
-    ActiveRecord::QueryLogs.formatter = nil
+    ActiveRecord::QueryLogs.update_formatter
 
     # ActiveSupport::ExecutionContext context is automatically reset in Rails app via an executor hooks set in railtie
     # But not in Active Record's own test suite.
