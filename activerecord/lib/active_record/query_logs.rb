@@ -73,7 +73,7 @@ module ActiveRecord
     mattr_accessor :tags, instance_accessor: false, default: [ :application ]
     mattr_accessor :prepend_comment, instance_accessor: false, default: false
     mattr_accessor :cache_query_log_tags, instance_accessor: false, default: false
-    mattr_accessor :tags_separator, instance_accessor: false, default: ':'
+    mattr_accessor :tags_separator, instance_accessor: false, default: ":"
     thread_mattr_accessor :cached_comment, instance_accessor: false
 
     class << self
