@@ -23,6 +23,7 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.prepend_comment = false
     ActiveRecord::QueryLogs.cache_query_log_tags = false
     ActiveRecord::QueryLogs.cached_comment = nil
+    ActiveRecord::QueryLogs.tags_separator = ":"
   end
 
   def teardown
@@ -32,6 +33,7 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.prepend_comment = false
     ActiveRecord::QueryLogs.cache_query_log_tags = false
     ActiveRecord::QueryLogs.cached_comment = nil
+    ActiveRecord::QueryLogs.tags_separator = ":"
     # ActiveSupport::ExecutionContext context is automatically reset in Rails app via an executor hooks set in railtie
     # But not in Active Record's own test suite.
     ActiveSupport::ExecutionContext.clear
@@ -39,6 +41,11 @@ class QueryLogsTest < ActiveRecord::TestCase
 
   def test_escaping_good_comment
     assert_equal "app:foo", ActiveRecord::QueryLogs.send(:escape_sql_comment, "app:foo")
+  end
+
+  def test_escaping_good_comment_with_custom_separator
+    ActiveRecord::QueryLogs.tags_separator = "="
+    assert_equal "app=foo", ActiveRecord::QueryLogs.send(:escape_sql_comment, "app=foo")
   end
 
   def test_escaping_bad_comments
@@ -145,6 +152,13 @@ class QueryLogsTest < ActiveRecord::TestCase
     ActiveRecord::QueryLogs.tags = [ empty: -> { nil } ]
     assert_sql(%r{select id from posts$}) do
       ActiveRecord::Base.connection.execute "select id from posts"
+    end
+  end
+
+  def test_custom_tags_separator
+    ActiveRecord::QueryLogs.tags_separator = "="
+    assert_sql(%r{/\*application=active_record\*/}) do
+      Dashboard.first
     end
   end
 

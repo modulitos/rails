@@ -34,6 +34,7 @@ module ActiveRecord
     config.active_record.sqlite3_production_warning = true
     config.active_record.query_log_tags_enabled = false
     config.active_record.query_log_tags = [ :application ]
+    config.active_record.query_log_tags_separator = ":"
     config.active_record.cache_query_log_tags = false
 
     config.active_record.queues = ActiveSupport::InheritableOptions.new
@@ -244,6 +245,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
           :shard_resolver,
           :query_log_tags_enabled,
           :query_log_tags,
+          :query_log_tags_separator,
           :cache_query_log_tags,
           :sqlite3_production_warning,
           :check_schema_cache_dump_version,
@@ -378,6 +380,10 @@ To keep using the current cache store, you can turn off cache versioning entirel
 
           if app.config.active_record.query_log_tags.present?
             ActiveRecord::QueryLogs.tags = app.config.active_record.query_log_tags
+          end
+
+          if app.config.active_record.query_log_tags_separator.present?
+            ActiveRecord::QueryLogs.tags_separator = app.config.active_record.query_log_tags_separator
           end
 
           if app.config.active_record.cache_query_log_tags
