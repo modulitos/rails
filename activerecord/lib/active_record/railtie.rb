@@ -245,7 +245,7 @@ To keep using the current cache store, you can turn off cache versioning entirel
           :shard_resolver,
           :query_log_tags_enabled,
           :query_log_tags,
-          :query_log_tags_separator,
+          :query_log_tags_format,
           :cache_query_log_tags,
           :sqlite3_production_warning,
           :check_schema_cache_dump_version,
@@ -382,8 +382,8 @@ To keep using the current cache store, you can turn off cache versioning entirel
             ActiveRecord::QueryLogs.tags = app.config.active_record.query_log_tags
           end
 
-          if app.config.active_record.query_log_tags_separator.present?
-            ActiveRecord::QueryLogs.tags_separator = app.config.active_record.query_log_tags_separator
+          if app.config.active_record.query_log_tags_format.present?
+            ActiveRecord::QueryLogs.tags_format = app.config.active_record.query_log_tags_format
           end
 
           if app.config.active_record.cache_query_log_tags
