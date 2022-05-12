@@ -90,11 +90,13 @@ module ActiveRecord
         self.cached_comment = nil
       end
 
-      def update_formatter(formatter = :default)
+      # Updates the formatter to be what the passed in format is.
+      def update_formatter(formatter = tags_format)
         self.tags_formatter = QueryLogs::FormatterFactory.from_symbol(formatter)
       end
 
       ActiveSupport::ExecutionContext.after_change { ActiveRecord::QueryLogs.clear_cache }
+      ActiveSupport::ExecutionContext.after_change { ActiveRecord::QueryLogs.update_formatter }
 
       private
         # Returns an SQL comment +String+ containing the query log tags.
@@ -108,7 +110,7 @@ module ActiveRecord
         end
 
         def formatter
-          self.tags_formatter ||= QueryLogs::FormatterFactory.from_symbol(self.tags_format)
+          self.tags_formatter ||= QueryLogs::FormatterFactory.from_symbol(tags_format)
         end
 
         def uncached_comment
