@@ -76,6 +76,14 @@ module ApplicationTests
       assert_equal ActiveRecord::QueryLogs.tags, [ :application, :controller, :action, :job ]
     end
 
+    test "tags formatter is defined by default" do
+      add_to_config "config.active_record.query_log_tags_enabled = true"
+
+      boot_app
+
+      assert_equal ActiveRecord::QueryLogs.tags_format, :default
+    end
+
     test "controller actions have tagging filters enabled by default" do
       add_to_config "config.active_record.query_log_tags_enabled = true"
 
@@ -85,6 +93,18 @@ module ApplicationTests
       comment = last_response.body.strip
 
       assert_includes comment, "controller:users"
+    end
+
+    test "sqlcommenter formatting works when specified" do
+      add_to_config "config.active_record.query_log_tags_enabled = true"
+      add_to_config "config.active_record.query_log_tags_format = :sqlcommenter"
+
+      boot_app
+
+      get "/"
+      comment = last_response.body.strip
+
+      assert_includes comment, "controller='users'"
     end
 
     test "controller actions tagging filters can be disabled" do
