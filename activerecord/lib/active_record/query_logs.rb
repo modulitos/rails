@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/module/attribute_accessors_per_thread"
-require_relative "query_logs_formatter"
 
 module ActiveRecord
   # = Active Record Query Logs
