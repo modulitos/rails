@@ -939,6 +939,10 @@ Define an `Array` specifying the key/value tags to be inserted in an SQL
 comment. Defaults to `[ :application ]`, a predefined tag returning the
 application name.
 
+#### `config.active_record.query_log_tags_separator`
+
+A `String` specifying the separator between the key/value tags. Defaults to `:`.
+
 #### `config.active_record.cache_query_log_tags`
 
 Specifies whether or not to enable caching of query log tags. For applications
