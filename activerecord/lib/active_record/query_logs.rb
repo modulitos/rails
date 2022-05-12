@@ -76,7 +76,6 @@ module ActiveRecord
     mattr_accessor :cache_query_log_tags, instance_accessor: false, default: false
     mattr_accessor :tags_format, instance_accessor: false, default: :default
     thread_mattr_accessor :cached_comment, instance_accessor: false
-    thread_mattr_accessor :formatter, instance_accessor: false
 
     class << self
       def call(sql) # :nodoc:
