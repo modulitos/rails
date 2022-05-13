@@ -159,7 +159,7 @@ class QueryLogsTest < ActiveRecord::TestCase
   end
 
   def test_sql_commenter_format
-    ActiveRecord::QueryLogs.update_formater(:sqlcommenter)
+    ActiveRecord::QueryLogs.update_formatter(:sqlcommenter)
     assert_sql(%r{/\*application='active_record'\*/}) do
       Dashboard.first
     end
