@@ -47,7 +47,7 @@ class QueryLogsTest < ActiveRecord::TestCase
   end
 
   def test_escaping_good_comment_with_custom_separator
-    ActiveRecord::QueryLogs.tags_format = :sqlcommenter
+    ActiveRecord::QueryLogs.update_formatter(:sqlcommenter)
     assert_equal "app='foo'", ActiveRecord::QueryLogs.send(:escape_sql_comment, "app='foo'")
   end
 
@@ -159,7 +159,7 @@ class QueryLogsTest < ActiveRecord::TestCase
   end
 
   def test_sql_commenter_format
-    ActiveRecord::QueryLogs.tags_format = :sqlcommenter
+    ActiveRecord::QueryLogs.update_formatter(:sqlcommenter)
     assert_sql(%r{/\*application='active_record'\*/}) do
       Dashboard.first
     end
