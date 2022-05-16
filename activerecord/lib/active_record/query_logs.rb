@@ -143,7 +143,7 @@ module ActiveRecord
             else
               handler
             end
-            "#{key}#{self.formatter.key_value_separator}#{self.formatter.quote_value(val)}" unless val.nil?
+            "#{key}#{self.formatter.key_value_separator}#{self.formatter.format_value(val)}" unless val.nil?
           end.join(",")
         end
     end
